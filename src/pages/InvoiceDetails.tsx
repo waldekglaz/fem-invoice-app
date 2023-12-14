@@ -1,6 +1,8 @@
 import { useSelector, useDispatch } from 'react-redux'
 import { useParams, Link, useNavigate } from 'react-router-dom'
 import { deleteInvoice, markAsPaid } from '../redux/slices/invoicesSlice'
+import { IInvoice } from '../redux/slices/invoicesSlice'
+import Button from '../components/Button'
 
 function InvoiceDetails() {
   const invoices = useSelector((state) => state.invoices)
@@ -8,16 +10,16 @@ function InvoiceDetails() {
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
-  const handleInvoiceDelete = (id) => {
+  const handleInvoiceDelete = (id: string) => {
     dispatch(deleteInvoice(id))
     navigate('/invoices')
   }
-  const handleMarkAsPaid = (id) => {
+  const handleMarkAsPaid = (id: string) => {
     dispatch(markAsPaid(id))
     navigate('/invoices')
   }
 
-  const invoiceData = invoices.find((invoice) => invoice.id === id)
+  const invoiceData = invoices.find((invoice: IInvoice) => invoice.id === id)
   const {
     status,
     description,
@@ -47,10 +49,13 @@ function InvoiceDetails() {
           {status}
         </div>
       </div>
+
       <div className="p-6">
-        <h1>#{invoiceData.id}</h1>
-        <p className="mb-8">{description}</p>
-        <address>
+        <h1 className="text-violet-400">
+          #<span className="font-bold text-black">{invoiceData.id}</span>
+        </h1>
+        <p className="mb-8 text-violet-400">{description}</p>
+        <address className="text-violet-400 not-italic mb-8">
           19 Union Street
           <br />
           London
@@ -59,21 +64,21 @@ function InvoiceDetails() {
           <br />
           United Kingdom
         </address>
-        <div>
+        <div className="flex items-start justify-between">
           <div>
-            <div>
-              <p>Invoice Date</p>
-              <p>{date}</p>
+            <div className="mb-8">
+              <p className="text-violet-400 mb-4">Invoice Date</p>
+              <p className="font-bold text-lg">{date}</p>
             </div>
             <div>
-              <p>Payment Date</p>
-              <p>{date}</p>
+              <p className="text-violet-400 mb-4">Payment Date</p>
+              <p className="font-bold text-lg">{date}</p>
             </div>
           </div>
           <div>
-            <p>Bill To</p>
-            <address>
-              {name}
+            <p className="text-violet-400 mb-4">Bill To</p>
+            <address className="not-italic text-violet-400">
+              <p className="font-bold text-lg text-black">{name}</p>
               <br />
               {street}
               <br />
@@ -85,20 +90,29 @@ function InvoiceDetails() {
             </address>
           </div>
         </div>
-        <div>
-          <p>Sent to</p>
-          <p>{email}</p>
+        <div className="mb-9">
+          <p className="text-violet-400 mb-4">Sent to</p>
+          <p className="font-bold text-lg text-black">{email}</p>
         </div>
-        <div>
+        <div className="flex items-center justify-between bg-slate-800 p-6 text-slate-50">
           <p>Grand Total</p>
-          <p>{total}</p>
+          <p className="text-4xl font-bold">{total}</p>
         </div>
       </div>
       <div className="flex justify-between">
-        <Link to={`/invoices/edit/${id}`}>Edit</Link>
-        <button onClick={() => handleInvoiceDelete(id)}>Delete</button>
+        <Button role="edit" text="Edit" link={`/invoices/edit/${id}`} />
+        <Button
+          role="delete"
+          onClick={() => handleInvoiceDelete(id)}
+          text="Delete"
+        />
+
         {status !== 'Paid' && (
-          <button onClick={() => handleMarkAsPaid(id)}>Mark as Paid</button>
+          <Button
+            role="asPaid"
+            text="Mark as Paid"
+            onClick={() => handleMarkAsPaid(id)}
+          />
         )}
       </div>
     </div>
