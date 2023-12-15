@@ -102,12 +102,12 @@ function InvoiceEdit() {
           />
         </p>
         <p className="flex flex-col mb-4">
-          <label htmlFor="invoiceDate" className="text-slate-600 text-sm mb-2">
+          <label htmlFor="date" className="text-slate-600 text-sm mb-2">
             Invoice Date
           </label>
           <input
             type="date"
-            {...register('invoiceDate', { required: true })}
+            {...register('date', { required: true })}
             className="px-4 py-2 border border-slate-300 w-full"
           />
           {errors.name && errors.name.type === 'required' && (
@@ -137,49 +137,7 @@ function InvoiceEdit() {
             className="px-4 py-2 border border-slate-300 w-full"
           />
         </p>
-        {/* <h2 className="text-slate-600 font-bold mb-5">Item List</h2> */}
 
-        {/* <div>
-            <p className="flex flex-col mb-4">
-              <label htmlFor="itemName" className="text-slate-600 text-sm mb-2">
-                Item Name
-              </label>
-              <input
-                type="text"
-                {...register('itemName')}
-                className="px-4 py-2 border border-slate-300 w-full"
-              />
-            </p>
-            <div className="flex  mb-4 justify-start gap-2 items-center">
-              <p className="basis-1/4">
-                <label htmlFor="quantity" className="text-slate-600 text-sm mb-2">
-                  Qty.
-                </label>
-                <input
-                  type="text"
-                  {...register('quantity')}
-                  className="px-4 py-2 border border-slate-300 w-full"
-                />
-              </p>
-              <p className="basis-2/5">
-                <label htmlFor="price" className="text-slate-600 text-sm mb-2">
-                  Price
-                </label>
-                <input
-                  type="text"
-                  {...register('price')}
-                  className="px-4 py-2 border border-slate-300 w-full"
-                />
-              </p>
-  
-              <p>
-                <label htmlFor="price" className="text-slate-600 text-sm mb-2">
-                  Total
-                </label>
-                <input disabled className="px-4 py-2  w-full" />
-              </p>
-            </div>
-          </div> */}
         <p className="flex flex-col mb-4">
           <label htmlFor="status" className="text-slate-600 text-sm mb-2">
             Status
@@ -190,6 +148,16 @@ function InvoiceEdit() {
             <option value="Paid">Paid</option>
             <option value="Pending">Pending</option>
           </select>
+        </p>
+        <p className="flex flex-col mb-4">
+          <label htmlFor="invoiceDate" className="text-slate-600 text-sm mb-2">
+            Currency
+          </label>
+          <input
+            type="string"
+            {...register('currency')}
+            className="px-4 py-2 border border-slate-300 w-full"
+          />
         </p>
         <p className="flex flex-col mb-4">
           <label htmlFor="invoiceDate" className="text-slate-600 text-sm mb-2">

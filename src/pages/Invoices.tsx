@@ -1,12 +1,12 @@
-import { useState, useContext } from 'react'
 import { InvoiceSummary } from '../components'
 import { NoInvoices } from '../components'
 import { Link } from 'react-router-dom'
-import { InvoiceSummaryProps } from '../components/InvoiceSummary'
 import { useSelector } from 'react-redux'
+import { IInvoice } from '../redux/slices/invoicesSlice'
+import AddIcon from '../assets/plusIcon.png'
 
 function Invoices() {
-  const invoices = useSelector((state) => state.invoices)
+  const invoices: IInvoice[] = useSelector((state) => state.invoices)
 
   return (
     <div className="px-6 py-8 ">
@@ -19,7 +19,14 @@ function Invoices() {
               : `${invoices.length} invoices`}
           </div>
         </div>
-        <Link to="/invoices/new">New</Link>
+        <Link
+          className="flex items-center bg-violet-400 text-white font-bold p-2 pr-4 rounded-3xl hover:bg-violet-600"
+          to="/invoices/new">
+          <span className="bg-white p-3 rounded-full mr-2">
+            <img src={AddIcon} alt="" />
+          </span>
+          New
+        </Link>
       </div>
       {invoices.length > 0 ? (
         <div>

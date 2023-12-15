@@ -31,10 +31,11 @@ function InvoiceDetails() {
     country,
     email,
     total,
+    currency,
   } = invoiceData
   console.log(invoiceData)
   return (
-    <div className="px-6 py-8 ">
+    <div className="px-6 pt-8 ">
       <Link to="/invoices" className="flex gap-6 items-center font-bold">
         <span className="text-violet-400 ">&lt;</span>Go back
       </Link>
@@ -94,12 +95,14 @@ function InvoiceDetails() {
           <p className="text-violet-400 mb-4">Sent to</p>
           <p className="font-bold text-lg text-black">{email}</p>
         </div>
-        <div className="flex items-center justify-between bg-slate-800 p-6 text-slate-50">
+        <div className="flex items-center justify-between bg-slate-800 p-6 text-slate-50 rounded-b-lg">
           <p>Grand Total</p>
-          <p className="text-4xl font-bold">{total}</p>
+          <p className="text-4xl font-bold">
+            {currency} {total}
+          </p>
         </div>
       </div>
-      <div className="flex justify-between">
+      <div className="flex justify-between bg-white p-6">
         <Button role="edit" text="Edit" link={`/invoices/edit/${id}`} />
         <Button
           role="delete"

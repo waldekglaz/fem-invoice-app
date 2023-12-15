@@ -15,6 +15,7 @@ export interface IInvoice {
   postcode: string
   country: string
   paymentTerms: number
+  currency: string
 }
 
 const initialState: IInvoice[] = [
@@ -31,6 +32,7 @@ const initialState: IInvoice[] = [
     postcode: 'GL53 5AF',
     country: 'United Kingdom',
     paymentTerms: 14,
+    currency: '$',
   },
 ]
 
