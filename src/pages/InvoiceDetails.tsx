@@ -37,7 +37,7 @@ function InvoiceDetails() {
   const grandTotal = items.reduce((sum, item) => {
     return sum + item.qty * item.price;
   }, 0);
-  console.log(grandTotal, "grandTodatl");
+
   console.log(invoiceData);
   return (
     <div className="px-6 pt-8 ">

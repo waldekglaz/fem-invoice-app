@@ -4,6 +4,7 @@ type TListItems = {
   name: string;
   qty: number;
   price: number;
+  total?: number;
 };
 
 export interface IInvoice {
