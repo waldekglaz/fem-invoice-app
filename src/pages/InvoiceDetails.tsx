@@ -1,25 +1,25 @@
-import { useSelector, useDispatch } from 'react-redux'
-import { useParams, Link, useNavigate } from 'react-router-dom'
-import { deleteInvoice, markAsPaid } from '../redux/slices/invoicesSlice'
-import { IInvoice } from '../redux/slices/invoicesSlice'
-import Button from '../components/Button'
+import { useSelector, useDispatch } from "react-redux";
+import { useParams, Link, useNavigate } from "react-router-dom";
+import { deleteInvoice, markAsPaid } from "../redux/slices/invoicesSlice";
+import { IInvoice } from "../redux/slices/invoicesSlice";
+import Button from "../components/Button";
 
 function InvoiceDetails() {
-  const invoices = useSelector((state) => state.invoices)
-  const { id } = useParams()
-  const dispatch = useDispatch()
-  const navigate = useNavigate()
+  const invoices = useSelector((state) => state.invoices);
+  const { id } = useParams();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleInvoiceDelete = (id: string) => {
-    dispatch(deleteInvoice(id))
-    navigate('/invoices')
-  }
+    dispatch(deleteInvoice(id));
+    navigate("/invoices");
+  };
   const handleMarkAsPaid = (id: string) => {
-    dispatch(markAsPaid(id))
-    navigate('/invoices')
-  }
+    dispatch(markAsPaid(id));
+    navigate("/invoices");
+  };
 
-  const invoiceData = invoices.find((invoice: IInvoice) => invoice.id === id)
+  const invoiceData = invoices.find((invoice: IInvoice) => invoice.id === id);
   const {
     status,
     description,
@@ -30,10 +30,15 @@ function InvoiceDetails() {
     postcode,
     country,
     email,
-    total,
     currency,
-  } = invoiceData
-  console.log(invoiceData)
+    items,
+  } = invoiceData;
+
+  const grandTotal = items.reduce((sum, item) => {
+    return sum + item.qty * item.price;
+  }, 0);
+  console.log(grandTotal, "grandTodatl");
+  console.log(invoiceData);
   return (
     <div className="px-6 pt-8 ">
       <Link to="/invoices" className="flex gap-6 items-center font-bold">
@@ -43,10 +48,11 @@ function InvoiceDetails() {
         <div className="text-sm text-violet-400">Status</div>
         <div
           className={`font-bold px-7 py-3 rounded-md ${
-            status === 'Paid'
-              ? 'text-green-500 bg-green-100'
-              : 'text-orange-500 bg-orange-100'
-          }`}>
+            status === "Paid"
+              ? "text-green-500 bg-green-100"
+              : "text-orange-500 bg-orange-100"
+          }`}
+        >
           {status}
         </div>
       </div>
@@ -95,10 +101,23 @@ function InvoiceDetails() {
           <p className="text-violet-400 mb-4">Sent to</p>
           <p className="font-bold text-lg text-black">{email}</p>
         </div>
+        <div>
+          {items.map((item) => (
+            <div key={item.name}>
+              <p>{item.name}</p>
+              <p>
+                {item.qty} x {currency} {item.price}
+              </p>
+              <p>
+                {currency} {item.qty * item.price}
+              </p>
+            </div>
+          ))}
+        </div>
         <div className="flex items-center justify-between bg-slate-800 p-6 text-slate-50 rounded-b-lg">
           <p>Grand Total</p>
           <p className="text-4xl font-bold">
-            {currency} {total}
+            {currency} {grandTotal}
           </p>
         </div>
       </div>
@@ -110,7 +129,7 @@ function InvoiceDetails() {
           text="Delete"
         />
 
-        {status !== 'Paid' && (
+        {status !== "Paid" && (
           <Button
             role="asPaid"
             text="Mark as Paid"
@@ -119,7 +138,7 @@ function InvoiceDetails() {
         )}
       </div>
     </div>
-  )
+  );
 }
 
-export default InvoiceDetails
+export default InvoiceDetails;
