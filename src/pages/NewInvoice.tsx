@@ -9,11 +9,11 @@ function NewInvoice() {
   const dispatch = useDispatch()
   const { register, handleSubmit } = useForm()
   const navigate = useNavigate()
+  const [items, setItems] = useState([{ name: '', qty: 1, price: '' }])
 
   const onSubmit = ({
     name,
     date,
-    total,
     street,
     email,
     country,
@@ -26,7 +26,6 @@ function NewInvoice() {
       id: 'aa00001',
       name,
       date,
-      total,
       status: 'Pending',
       street,
       email,
@@ -35,10 +34,22 @@ function NewInvoice() {
       city,
       currency,
       description,
+      items: items,
     }
     console.log(date)
     dispatch(addInvoice(newInvoice))
     navigate('/invoices')
+  }
+
+  const handleAddItem = () => {
+    setItems([...items, { name: '', qty: 1, price: '' }])
+    console.log(items)
+  }
+
+  const handleDeleteItem = (index) => {
+    const updatedItems = [...items]
+    updatedItems.splice(index, 1)
+    setItems(updatedItems)
   }
 
   return (
@@ -145,6 +156,63 @@ function NewInvoice() {
             className="px-4 py-2 border border-slate-300 w-full"
           />
         </p>
+        <div>
+          <h2>Items List</h2>
+          {items.map((item, index) => (
+            <div
+              key={`${index}-item`}
+              id={`item-${index}`}
+              className="list-item">
+              <div>
+                <label htmlFor={`item-name-${index}`}>Item Name</label>
+                <input
+                  type="text"
+                  value={item.name}
+                  onChange={(e) => {
+                    const newItems = [...items]
+                    newItems[index] = { ...item, name: e.target.value }
+                    setItems(newItems)
+                  }}
+                />
+              </div>
+              <div>
+                <label htmlFor={`item-name-${index}`}>Qty.</label>
+                <input
+                  type="number"
+                  value={item.qty}
+                  onChange={(e) => {
+                    const newItems = [...items]
+                    newItems[index] = { ...item, qty: +e.target.value }
+                    setItems(newItems)
+                  }}
+                />
+              </div>
+              <div>
+                <label htmlFor={`item-name-${index}`}>Price</label>
+                <input
+                  type="number"
+                  value={item.price}
+                  onChange={(e) => {
+                    const newItems = [...items]
+                    newItems[index] = { ...item, price: +e.target.value }
+                    setItems(newItems)
+                  }}
+                />
+              </div>
+              <div>
+                <label htmlFor="total">Total</label>
+                <input type="number" disabled value={item.qty * item.price} />
+              </div>
+              <button type="button" onClick={() => handleDeleteItem(index)}>
+                Delete Item
+              </button>
+            </div>
+          ))}
+
+          <button type="button" onClick={handleAddItem}>
+            Add Item
+          </button>
+        </div>
 
         <p className="flex flex-col mb-4">
           <label htmlFor="invoiceDate" className="text-slate-600 text-sm mb-2">

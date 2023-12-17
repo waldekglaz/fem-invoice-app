@@ -1,12 +1,12 @@
 export type InvoiceSummaryProps = {
-  id: string;
-  name: string;
-  date: string;
-  status: "Paid" | "Pending";
-  currency: string;
-  total: number;
-  items: unknown[];
-};
+  id: string
+  name: string
+  date: string
+  status: 'Paid' | 'Pending'
+  currency: string
+  total: number
+  items: unknown[]
+}
 
 function InvoiceSummary({
   id,
@@ -14,12 +14,11 @@ function InvoiceSummary({
   date,
   status,
   currency,
-  total,
   items,
 }: InvoiceSummaryProps) {
-  const grandTotal = items.reduce((sum, item) => {
-    return sum + item.qty * item.price;
-  }, 0);
+  const grandTotal = items.reduce((sum: number, item) => {
+    return sum + item.qty * item.price
+  }, 0)
   return (
     <div className="bg-white rounded-lg p-6 mb-4 md:flex md:items-center md:justify-evenly">
       <div className="flex justify-between items-center">
@@ -38,16 +37,15 @@ function InvoiceSummary({
         </div>
         <div
           className={`font-bold px-7 py-3 rounded-md ${
-            status === "Paid"
-              ? "text-green-500 bg-green-100"
-              : "text-orange-500 bg-orange-100"
-          }`}
-        >
+            status === 'Paid'
+              ? 'text-green-500 bg-green-100'
+              : 'text-orange-500 bg-orange-100'
+          }`}>
           {status}
         </div>
       </div>
     </div>
-  );
+  )
 }
 
-export default InvoiceSummary;
+export default InvoiceSummary

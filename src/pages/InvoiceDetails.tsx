@@ -1,25 +1,25 @@
-import { useSelector, useDispatch } from "react-redux";
-import { useParams, Link, useNavigate } from "react-router-dom";
-import { deleteInvoice, markAsPaid } from "../redux/slices/invoicesSlice";
-import { IInvoice } from "../redux/slices/invoicesSlice";
-import Button from "../components/Button";
+import { useSelector, useDispatch } from 'react-redux'
+import { useParams, Link, useNavigate } from 'react-router-dom'
+import { deleteInvoice, markAsPaid } from '../redux/slices/invoicesSlice'
+import { IInvoice } from '../redux/slices/invoicesSlice'
+import Button from '../components/Button'
 
 function InvoiceDetails() {
-  const invoices = useSelector((state) => state.invoices);
-  const { id } = useParams();
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
+  const invoices = useSelector((state) => state.invoices)
+  const { id } = useParams()
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
 
   const handleInvoiceDelete = (id: string) => {
-    dispatch(deleteInvoice(id));
-    navigate("/invoices");
-  };
+    dispatch(deleteInvoice(id))
+    navigate('/invoices')
+  }
   const handleMarkAsPaid = (id: string) => {
-    dispatch(markAsPaid(id));
-    navigate("/invoices");
-  };
+    dispatch(markAsPaid(id))
+    navigate('/invoices')
+  }
 
-  const invoiceData = invoices.find((invoice: IInvoice) => invoice.id === id);
+  const invoiceData = invoices.find((invoice: IInvoice) => invoice.id === id)
   const {
     status,
     description,
@@ -32,13 +32,14 @@ function InvoiceDetails() {
     email,
     currency,
     items,
-  } = invoiceData;
+  } = invoiceData
 
   const grandTotal = items.reduce((sum, item) => {
-    return sum + item.qty * item.price;
-  }, 0);
+    return sum + item.qty * item.price
+  }, 0)
 
-  console.log(invoiceData);
+  console.log(items)
+  // console.log(invoiceData);
   return (
     <div className="px-6 pt-8 ">
       <Link to="/invoices" className="flex gap-6 items-center font-bold">
@@ -48,11 +49,10 @@ function InvoiceDetails() {
         <div className="text-sm text-violet-400">Status</div>
         <div
           className={`font-bold px-7 py-3 rounded-md ${
-            status === "Paid"
-              ? "text-green-500 bg-green-100"
-              : "text-orange-500 bg-orange-100"
-          }`}
-        >
+            status === 'Paid'
+              ? 'text-green-500 bg-green-100'
+              : 'text-orange-500 bg-orange-100'
+          }`}>
           {status}
         </div>
       </div>
@@ -129,7 +129,7 @@ function InvoiceDetails() {
           text="Delete"
         />
 
-        {status !== "Paid" && (
+        {status !== 'Paid' && (
           <Button
             role="asPaid"
             text="Mark as Paid"
@@ -138,7 +138,7 @@ function InvoiceDetails() {
         )}
       </div>
     </div>
-  );
+  )
 }
 
-export default InvoiceDetails;
+export default InvoiceDetails

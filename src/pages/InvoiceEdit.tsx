@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import { Link, useNavigate } from 'react-router-dom'
@@ -10,6 +10,12 @@ function InvoiceEdit() {
   const { id } = useParams()
   const invoices = useSelector((state) => state.invoices)
   const editedInvoice = invoices.find((invoice) => invoice.id === id)
+  const [items, setItems] = useState(editedInvoice.items)
+
+  const handleAddItem = () => {
+    setItems([...items, { name: '', qty: 1, price: '' }])
+    console.log(items)
+  }
 
   const dispatch = useDispatch()
   const {
@@ -137,7 +143,58 @@ function InvoiceEdit() {
             className="px-4 py-2 border border-slate-300 w-full"
           />
         </p>
+        <div>
+          <h2>Items List</h2>
+          {items.map((item, index) => (
+            <div key={`${index}-item`} className="list-item">
+              <div>
+                <label htmlFor={`item-name-${index}`}>Item Name</label>
+                <input
+                  type="text"
+                  value={item.name}
+                  onChange={(e) => {
+                    const newItems = [...items]
+                    newItems[index] = { ...item, name: e.target.value }
+                    setItems(newItems)
+                  }}
+                />
+              </div>
+              <div>
+                <label htmlFor={`item-name-${index}`}>Qty.</label>
+                <input
+                  type="number"
+                  value={item.qty}
+                  onChange={(e) => {
+                    const newItems = [...items]
+                    newItems[index] = { ...item, qty: +e.target.value }
+                    setItems(newItems)
+                  }}
+                />
+              </div>
+              <div>
+                <label htmlFor={`item-name-${index}`}>Price</label>
+                <input
+                  type="number"
+                  value={item.price}
+                  onChange={(e) => {
+                    const newItems = [...items]
+                    newItems[index] = { ...item, price: +e.target.value }
+                    setItems(newItems)
+                  }}
+                />
+              </div>
+              <div>
+                <label htmlFor="total">Total</label>
+                <input type="number" disabled value={item.qty * item.price} />
+              </div>
+              <button>Delete Item</button>
+            </div>
+          ))}
 
+          <button type="button" onClick={handleAddItem}>
+            Add Item
+          </button>
+        </div>
         <p className="flex flex-col mb-4">
           <label htmlFor="status" className="text-slate-600 text-sm mb-2">
             Status
