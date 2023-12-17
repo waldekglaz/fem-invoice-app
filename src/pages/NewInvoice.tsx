@@ -5,6 +5,7 @@ import { useForm } from 'react-hook-form'
 import { useState } from 'react'
 import { IInvoice } from '../redux/slices/invoicesSlice'
 import TrashIcon from '../assets/trash.png'
+import InputField from '../components/InputField'
 
 function NewInvoice() {
   const dispatch = useDispatch()
@@ -39,7 +40,6 @@ function NewInvoice() {
       paymentTerms,
       items: items,
     }
-    console.log(date)
     dispatch(addInvoice(newInvoice))
     navigate('/invoices')
   }
@@ -63,36 +63,28 @@ function NewInvoice() {
       <h1 className="font-bold mt-6 mb-5 text-lg">New Invoice</h1>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="text-violet-600 mb-6 ">Bill to</div>
-        <p className="flex flex-col mb-4 ">
-          <label className="text-slate-600 text-sm mb-2" htmlFor="name">
-            Client's Name
-          </label>
+        <InputField label="Client's Name" name="name">
           <input
             type="text"
             {...register('name')}
             className=" px-4 py-2 border border-slate-300"
           />
-        </p>
-        <p className="flex flex-col mb-4">
-          <label htmlFor="email" className="text-slate-600 text-sm mb-2">
-            Client's Email
-          </label>
+        </InputField>
+        <InputField label="Client's Email" name="email">
           <input
             type="email"
             {...register('email')}
             className=" px-4 py-2 border border-slate-300"
           />
-        </p>
-        <p className="flex flex-col mb-4">
-          <label htmlFor="street" className="text-slate-600 text-sm mb-2">
-            Street Address
-          </label>
+        </InputField>
+        <InputField label="Street Address" name="street">
           <input
             type="email"
             {...register('street')}
             className=" px-4 py-2 border border-slate-300"
           />
-        </p>
+        </InputField>
+
         <div className="flex justify-between gap-4 mb-4">
           <p className="basis-2/4">
             <label htmlFor="city" className="text-slate-600  text-sm mb-2">

@@ -6,15 +6,16 @@ import { editInvoice } from '../redux/slices/invoicesSlice'
 import { useDispatch, useSelector } from 'react-redux'
 import { IInvoice } from '../redux/slices/invoicesSlice'
 import TrashIcon from '../assets/trash.png'
+import { RootState } from '../redux/store'
 
 function InvoiceEdit() {
   const { id } = useParams()
-  const invoices = useSelector((state) => state.invoices)
-  const editedInvoice = invoices.find((invoice) => invoice.id === id)
-  const [items, setItems] = useState(editedInvoice.items)
+  const invoices = useSelector((state: RootState) => state.invoices)
+  const editedInvoice = invoices.find((invoice: IInvoice) => invoice.id === id)
+  const [items, setItems] = useState(editedInvoice!.items)
 
   const handleAddItem = () => {
-    setItems([...items, { name: '', qty: 1, price: '' }])
+    setItems([...items, { name: '', qty: 1, price: 0 }])
   }
 
   const handleDeleteItem = (index: number) => {
@@ -34,7 +35,7 @@ function InvoiceEdit() {
   const navigate = useNavigate()
 
   const onSubmit = (data: IInvoice[]) => {
-    const updatedInvoice = {
+    const updatedInvoice: IInvoice = {
       ...data,
       id,
       items: [...items],
