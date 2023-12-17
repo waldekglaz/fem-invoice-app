@@ -1,10 +1,9 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
-type TListItems = {
+export type TListItems = {
   name: string
   qty: number
   price: number
-  total?: number
 }
 
 export interface IInvoice {

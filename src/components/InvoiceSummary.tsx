@@ -1,10 +1,12 @@
+import { TListItems } from '../redux/slices/invoicesSlice'
+
 export type InvoiceSummaryProps = {
   id: string
   name: string
   date: string
   status: 'Paid' | 'Pending'
   currency: string
-  items: unknown[]
+  items: TListItems[]
 }
 
 function InvoiceSummary({

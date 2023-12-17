@@ -35,11 +35,11 @@ function InvoiceEdit() {
 
   const onSubmit = (data: IInvoice[]) => {
     const updatedInvoice = {
-      id,
-      items,
       ...data,
+      id,
+      items: [...items],
     }
-    console.log(items, 'items')
+
     dispatch(editInvoice({ id, updatedInvoice }))
     navigate('/invoices')
   }
@@ -121,12 +121,9 @@ function InvoiceEdit() {
           </label>
           <input
             type="date"
-            {...register('date', { required: true })}
+            {...register('date')}
             className="px-4 py-2 border border-slate-300 w-full"
           />
-          {errors.name && errors.name.type === 'required' && (
-            <span role="alert">This is required</span>
-          )}
         </p>
         <p className="flex flex-col mb-4">
           <label htmlFor="paymentTerms" className="text-slate-600 text-sm mb-2">
@@ -152,17 +149,17 @@ function InvoiceEdit() {
           />
         </p>
         <div>
-          <h2>Items List</h2>
+          <h2 className="text-2xl font-bold mb-4">Items List</h2>
           {items.map((item, index) => (
             <div
               key={`${index}-item`}
               id={`item-${index}`}
-              className="list-item">
-              <p className="flex flex-col mb-4">
+              className="list-item list-none md:flex md:justify-start md:items-center">
+              <p className="flex flex-col mb-4 md:mr-4">
                 {' '}
                 <label
                   htmlFor={`item-name-${index}`}
-                  className="text-slate-600 text-sm mb-2">
+                  className="text-slate-600 text-sm mb-2 ">
                   Item Name
                 </label>
                 <input
@@ -177,9 +174,13 @@ function InvoiceEdit() {
                 />
               </p>
 
-              <div className="flex items-center justify-between">
-                <p>
-                  <label htmlFor={`item-name-${index}`}>Qty.</label>
+              <div className="flex items-center justify-between ">
+                <p className="flex flex-col mb-4 mr-4">
+                  <label
+                    htmlFor={`item-qty-${index}`}
+                    className="text-slate-600 text-sm mb-2 ">
+                    Qty.
+                  </label>
                   <input
                     type="number"
                     value={item.qty}
@@ -188,12 +189,16 @@ function InvoiceEdit() {
                       newItems[index] = { ...item, qty: +e.target.value }
                       setItems(newItems)
                     }}
-                    className="px-4 py-2 border border-slate-300 w-14 mr-4"
+                    className="px-4 py-2 border border-slate-300 w-14"
                   />
                 </p>
-                <p>
+                <p className="flex flex-col mb-4 md:mr-4">
                   {' '}
-                  <label htmlFor={`item-name-${index}`}>Price</label>
+                  <label
+                    className="text-slate-600 text-sm mb-2 "
+                    htmlFor={`item-price-${index}`}>
+                    Price
+                  </label>
                   <input
                     type="number"
                     value={item.price}
@@ -202,13 +207,22 @@ function InvoiceEdit() {
                       newItems[index] = { ...item, price: +e.target.value }
                       setItems(newItems)
                     }}
-                    className="px-4 py-2 border border-slate-300 w-[100px] mr-2"
+                    className="px-4 py-2 border border-slate-300 w-[100px] mr-2 md:w-[220px]"
                   />
                 </p>
-                <p className="mr-4">
+                <p className="flex flex-col mb-4 md:mr-10">
                   {' '}
-                  <label htmlFor="total">Total</label>
-                  <div>{item.qty * item.price}</div>
+                  <label
+                    className="text-slate-600 text-sm mb-2 "
+                    htmlFor="total">
+                    Total
+                  </label>
+                  <input
+                    className="px-4 py-2 border border-slate-300 w-18"
+                    type="text"
+                    disabled
+                    value={item.qty * item.price}
+                  />
                 </p>
                 <button type="button" onClick={() => handleDeleteItem(index)}>
                   <img
@@ -229,17 +243,7 @@ function InvoiceEdit() {
             + Add New Item
           </button>
         </div>
-        <p className="flex flex-col mb-4">
-          <label htmlFor="status" className="text-slate-600 text-sm mb-2">
-            Status
-          </label>
-          <select
-            {...register('status')}
-            className="text-slate-600 text-sm mb-2 px-4 py-2 border border-slate-300">
-            <option value="Paid">Paid</option>
-            <option value="Pending">Pending</option>
-          </select>
-        </p>
+
         <p className="flex flex-col mb-4">
           <label htmlFor="invoiceDate" className="text-slate-600 text-sm mb-2">
             Currency
@@ -250,19 +254,6 @@ function InvoiceEdit() {
             className="px-4 py-2 border border-slate-300 w-full"
           />
         </p>
-        <p className="flex flex-col mb-4">
-          <label htmlFor="invoiceDate" className="text-slate-600 text-sm mb-2">
-            Total Price
-          </label>
-          <input
-            type="number"
-            {...register('total')}
-            className="px-4 py-2 border border-slate-300 w-full"
-          />
-        </p>
-        {/* <button onClick={addItem} className="bg-red-500">
-            Add Item
-          </button> */}
       </form>
       <div className="flex justify-between">
         <button onClick={() => navigate('/invoices')}>Cancel</button>

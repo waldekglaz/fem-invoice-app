@@ -22,6 +22,7 @@ function NewInvoice() {
     city,
     currency,
     description,
+    paymentTerms,
   }: IInvoice) => {
     const newInvoice = {
       id: 'aa00001',
@@ -35,6 +36,7 @@ function NewInvoice() {
       city,
       currency,
       description,
+      paymentTerms,
       items: items,
     }
     console.log(date)
@@ -54,7 +56,7 @@ function NewInvoice() {
   }
 
   return (
-    <div className="px-6 py-8 ">
+    <div className="px-6 py-8 md:px-12">
       <Link to="/invoices" className="flex gap-6 items-center font-bold">
         <span className="text-violet-400 ">&lt;</span>Go back
       </Link>
@@ -158,17 +160,17 @@ function NewInvoice() {
           />
         </p>
         <div>
-          <h2>Items List</h2>
+          <h2 className="text-2xl font-bold mb-4">Items List</h2>
           {items.map((item, index) => (
             <div
               key={`${index}-item`}
               id={`item-${index}`}
-              className="list-item">
-              <p className="flex flex-col mb-4">
+              className="list-item list-none md:flex md:justify-start md:items-center">
+              <p className="flex flex-col mb-4 md:mr-4">
                 {' '}
                 <label
                   htmlFor={`item-name-${index}`}
-                  className="text-slate-600 text-sm mb-2">
+                  className="text-slate-600 text-sm mb-2 ">
                   Item Name
                 </label>
                 <input
@@ -183,9 +185,13 @@ function NewInvoice() {
                 />
               </p>
 
-              <div className="flex items-center justify-between">
-                <p>
-                  <label htmlFor={`item-name-${index}`}>Qty.</label>
+              <div className="flex items-center justify-between ">
+                <p className="flex flex-col mb-4 mr-4">
+                  <label
+                    htmlFor={`item-name-${index}`}
+                    className="text-slate-600 text-sm mb-2 ">
+                    Qty.
+                  </label>
                   <input
                     type="number"
                     value={item.qty}
@@ -194,12 +200,16 @@ function NewInvoice() {
                       newItems[index] = { ...item, qty: +e.target.value }
                       setItems(newItems)
                     }}
-                    className="px-4 py-2 border border-slate-300 w-14 mr-4"
+                    className="px-4 py-2 border border-slate-300 w-14"
                   />
                 </p>
-                <p>
+                <p className="flex flex-col mb-4 md:mr-4">
                   {' '}
-                  <label htmlFor={`item-name-${index}`}>Price</label>
+                  <label
+                    className="text-slate-600 text-sm mb-2 "
+                    htmlFor={`item-name-${index}`}>
+                    Price
+                  </label>
                   <input
                     type="number"
                     value={item.price}
@@ -208,13 +218,22 @@ function NewInvoice() {
                       newItems[index] = { ...item, price: +e.target.value }
                       setItems(newItems)
                     }}
-                    className="px-4 py-2 border border-slate-300 w-[100px] mr-2"
+                    className="px-4 py-2 border border-slate-300 w-[100px] mr-2 md:w-[220px]"
                   />
                 </p>
-                <p className="mr-4">
+                <p className="flex flex-col mb-4 md:mr-10">
                   {' '}
-                  <label htmlFor="total">Total</label>
-                  <div>{item.qty * item.price}</div>
+                  <label
+                    className="text-slate-600 text-sm mb-2 "
+                    htmlFor="total">
+                    Total
+                  </label>
+                  <input
+                    className="px-4 py-2 border border-slate-300 w-18"
+                    type="text"
+                    disabled
+                    value={item.qty * item.price}
+                  />
                 </p>
                 <button type="button" onClick={() => handleDeleteItem(index)}>
                   <img
