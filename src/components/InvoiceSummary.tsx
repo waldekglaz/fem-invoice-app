@@ -4,7 +4,6 @@ export type InvoiceSummaryProps = {
   date: string
   status: 'Paid' | 'Pending'
   currency: string
-  total: number
   items: unknown[]
 }
 

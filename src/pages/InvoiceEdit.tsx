@@ -5,6 +5,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { editInvoice } from '../redux/slices/invoicesSlice'
 import { useDispatch, useSelector } from 'react-redux'
 import { IInvoice } from '../redux/slices/invoicesSlice'
+import TrashIcon from '../assets/trash.png'
 
 function InvoiceEdit() {
   const { id } = useParams()
@@ -14,7 +15,12 @@ function InvoiceEdit() {
 
   const handleAddItem = () => {
     setItems([...items, { name: '', qty: 1, price: '' }])
-    console.log(items)
+  }
+
+  const handleDeleteItem = (index: number) => {
+    const updatedItems = [...items]
+    updatedItems.splice(index, 1)
+    setItems(updatedItems)
   }
 
   const dispatch = useDispatch()
@@ -30,8 +36,10 @@ function InvoiceEdit() {
   const onSubmit = (data: IInvoice[]) => {
     const updatedInvoice = {
       id,
+      items,
       ...data,
     }
+    console.log(items, 'items')
     dispatch(editInvoice({ id, updatedInvoice }))
     navigate('/invoices')
   }
@@ -146,9 +154,17 @@ function InvoiceEdit() {
         <div>
           <h2>Items List</h2>
           {items.map((item, index) => (
-            <div key={`${index}-item`} className="list-item">
-              <div>
-                <label htmlFor={`item-name-${index}`}>Item Name</label>
+            <div
+              key={`${index}-item`}
+              id={`item-${index}`}
+              className="list-item">
+              <p className="flex flex-col mb-4">
+                {' '}
+                <label
+                  htmlFor={`item-name-${index}`}
+                  className="text-slate-600 text-sm mb-2">
+                  Item Name
+                </label>
                 <input
                   type="text"
                   value={item.name}
@@ -157,42 +173,60 @@ function InvoiceEdit() {
                     newItems[index] = { ...item, name: e.target.value }
                     setItems(newItems)
                   }}
+                  className="px-4 py-2 border border-slate-300 w-full"
                 />
+              </p>
+
+              <div className="flex items-center justify-between">
+                <p>
+                  <label htmlFor={`item-name-${index}`}>Qty.</label>
+                  <input
+                    type="number"
+                    value={item.qty}
+                    onChange={(e) => {
+                      const newItems = [...items]
+                      newItems[index] = { ...item, qty: +e.target.value }
+                      setItems(newItems)
+                    }}
+                    className="px-4 py-2 border border-slate-300 w-14 mr-4"
+                  />
+                </p>
+                <p>
+                  {' '}
+                  <label htmlFor={`item-name-${index}`}>Price</label>
+                  <input
+                    type="number"
+                    value={item.price}
+                    onChange={(e) => {
+                      const newItems = [...items]
+                      newItems[index] = { ...item, price: +e.target.value }
+                      setItems(newItems)
+                    }}
+                    className="px-4 py-2 border border-slate-300 w-[100px] mr-2"
+                  />
+                </p>
+                <p className="mr-4">
+                  {' '}
+                  <label htmlFor="total">Total</label>
+                  <div>{item.qty * item.price}</div>
+                </p>
+                <button type="button" onClick={() => handleDeleteItem(index)}>
+                  <img
+                    src={TrashIcon}
+                    alt="bin icon"
+                    className="w-[14px] mt-5"
+                  />
+                </button>
               </div>
-              <div>
-                <label htmlFor={`item-name-${index}`}>Qty.</label>
-                <input
-                  type="number"
-                  value={item.qty}
-                  onChange={(e) => {
-                    const newItems = [...items]
-                    newItems[index] = { ...item, qty: +e.target.value }
-                    setItems(newItems)
-                  }}
-                />
-              </div>
-              <div>
-                <label htmlFor={`item-name-${index}`}>Price</label>
-                <input
-                  type="number"
-                  value={item.price}
-                  onChange={(e) => {
-                    const newItems = [...items]
-                    newItems[index] = { ...item, price: +e.target.value }
-                    setItems(newItems)
-                  }}
-                />
-              </div>
-              <div>
-                <label htmlFor="total">Total</label>
-                <input type="number" disabled value={item.qty * item.price} />
-              </div>
-              <button>Delete Item</button>
+              <div></div>
             </div>
           ))}
 
-          <button type="button" onClick={handleAddItem}>
-            Add Item
+          <button
+            type="button"
+            onClick={handleAddItem}
+            className="bg-slate-100 text-slate-500 font-bold w-full py-4 rounded-3xl mt-12">
+            + Add New Item
           </button>
         </div>
         <p className="flex flex-col mb-4">

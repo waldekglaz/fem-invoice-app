@@ -16,7 +16,7 @@ function Button({ text, role, onClick, link }: TButton | TLink) {
   if (role === 'edit') {
     return (
       <Link
-        className="bg-slate-100 text-slate-800 font-bold px-6 py-3 rounded-3xl hover:bg-slate-400"
+        className="bg-slate-100 text-slate-800 font-bold px-4 py-3 rounded-3xl hover:bg-slate-400"
         to={link}>
         {text}
       </Link>
@@ -24,7 +24,7 @@ function Button({ text, role, onClick, link }: TButton | TLink) {
   }
   return (
     <button
-      className={`font-bold px-6 py-3 rounded-3xl ${
+      className={`font-bold px-4 py-3 rounded-3xl ${
         role === 'delete'
           ? 'bg-red-500 text-white hover:bg-red-800'
           : 'bg-violet-700 text-white hover:bg-violet-800'

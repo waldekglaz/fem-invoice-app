@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux'
 import { useForm } from 'react-hook-form'
 import { useState } from 'react'
 import { IInvoice } from '../redux/slices/invoicesSlice'
+import TrashIcon from '../assets/trash.png'
 
 function NewInvoice() {
   const dispatch = useDispatch()
@@ -46,7 +47,7 @@ function NewInvoice() {
     console.log(items)
   }
 
-  const handleDeleteItem = (index) => {
+  const handleDeleteItem = (index: number) => {
     const updatedItems = [...items]
     updatedItems.splice(index, 1)
     setItems(updatedItems)
@@ -163,8 +164,13 @@ function NewInvoice() {
               key={`${index}-item`}
               id={`item-${index}`}
               className="list-item">
-              <div>
-                <label htmlFor={`item-name-${index}`}>Item Name</label>
+              <p className="flex flex-col mb-4">
+                {' '}
+                <label
+                  htmlFor={`item-name-${index}`}
+                  className="text-slate-600 text-sm mb-2">
+                  Item Name
+                </label>
                 <input
                   type="text"
                   value={item.name}
@@ -173,57 +179,63 @@ function NewInvoice() {
                     newItems[index] = { ...item, name: e.target.value }
                     setItems(newItems)
                   }}
+                  className="px-4 py-2 border border-slate-300 w-full"
                 />
+              </p>
+
+              <div className="flex items-center justify-between">
+                <p>
+                  <label htmlFor={`item-name-${index}`}>Qty.</label>
+                  <input
+                    type="number"
+                    value={item.qty}
+                    onChange={(e) => {
+                      const newItems = [...items]
+                      newItems[index] = { ...item, qty: +e.target.value }
+                      setItems(newItems)
+                    }}
+                    className="px-4 py-2 border border-slate-300 w-14 mr-4"
+                  />
+                </p>
+                <p>
+                  {' '}
+                  <label htmlFor={`item-name-${index}`}>Price</label>
+                  <input
+                    type="number"
+                    value={item.price}
+                    onChange={(e) => {
+                      const newItems = [...items]
+                      newItems[index] = { ...item, price: +e.target.value }
+                      setItems(newItems)
+                    }}
+                    className="px-4 py-2 border border-slate-300 w-[100px] mr-2"
+                  />
+                </p>
+                <p className="mr-4">
+                  {' '}
+                  <label htmlFor="total">Total</label>
+                  <div>{item.qty * item.price}</div>
+                </p>
+                <button type="button" onClick={() => handleDeleteItem(index)}>
+                  <img
+                    src={TrashIcon}
+                    alt="bin icon"
+                    className="w-[14px] mt-5"
+                  />
+                </button>
               </div>
-              <div>
-                <label htmlFor={`item-name-${index}`}>Qty.</label>
-                <input
-                  type="number"
-                  value={item.qty}
-                  onChange={(e) => {
-                    const newItems = [...items]
-                    newItems[index] = { ...item, qty: +e.target.value }
-                    setItems(newItems)
-                  }}
-                />
-              </div>
-              <div>
-                <label htmlFor={`item-name-${index}`}>Price</label>
-                <input
-                  type="number"
-                  value={item.price}
-                  onChange={(e) => {
-                    const newItems = [...items]
-                    newItems[index] = { ...item, price: +e.target.value }
-                    setItems(newItems)
-                  }}
-                />
-              </div>
-              <div>
-                <label htmlFor="total">Total</label>
-                <input type="number" disabled value={item.qty * item.price} />
-              </div>
-              <button type="button" onClick={() => handleDeleteItem(index)}>
-                Delete Item
-              </button>
+              <div></div>
             </div>
           ))}
 
-          <button type="button" onClick={handleAddItem}>
-            Add Item
+          <button
+            type="button"
+            onClick={handleAddItem}
+            className="bg-slate-100 text-slate-500 font-bold w-full py-4 rounded-3xl mt-12">
+            + Add New Item
           </button>
         </div>
 
-        <p className="flex flex-col mb-4">
-          <label htmlFor="invoiceDate" className="text-slate-600 text-sm mb-2">
-            Total Price
-          </label>
-          <input
-            type="number"
-            {...register('total')}
-            className="px-4 py-2 border border-slate-300 w-full"
-          />
-        </p>
         <p className="flex flex-col mb-4">
           <label htmlFor="invoiceDate" className="text-slate-600 text-sm mb-2">
             Currency

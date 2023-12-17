@@ -101,13 +101,18 @@ function InvoiceDetails() {
           <p className="text-violet-400 mb-4">Sent to</p>
           <p className="font-bold text-lg text-black">{email}</p>
         </div>
-        <div>
+        <div className="bg-slate-100 rounded-t-lg">
           {items.map((item) => (
-            <div key={item.name}>
-              <p>{item.name}</p>
-              <p>
-                {item.qty} x {currency} {item.price}
-              </p>
+            <div
+              key={item.name}
+              className="flex items-center p-6 font-bold justify-between ">
+              <div>
+                <p className="text-black ">{item.name}</p>
+                <p className="text-violet-400">
+                  {item.qty} x {currency} {item.price}
+                </p>
+              </div>
+
               <p>
                 {currency} {item.qty * item.price}
               </p>

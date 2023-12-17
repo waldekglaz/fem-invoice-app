@@ -4,9 +4,10 @@ import { Link } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { IInvoice } from '../redux/slices/invoicesSlice'
 import AddIcon from '../assets/plusIcon.png'
+import { RootState } from '../redux/store'
 
 function Invoices() {
-  const invoices: IInvoice[] = useSelector((state) => state.invoices)
+  const invoices: IInvoice[] = useSelector((state: RootState) => state.invoices)
 
   return (
     <div className="px-6 py-8 ">
