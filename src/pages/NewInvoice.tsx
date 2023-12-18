@@ -1,16 +1,21 @@
 import { Link, useNavigate } from 'react-router-dom'
 import { addInvoice } from '../redux/slices/invoicesSlice'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { useForm } from 'react-hook-form'
 import { useState } from 'react'
 import { IInvoice } from '../redux/slices/invoicesSlice'
 import TrashIcon from '../assets/trash.png'
 import InputField from '../components/InputField'
+import { generateInvoiceNumber } from '../utils/utils'
+import { RootState } from '../redux/store'
 
 function NewInvoice() {
   const dispatch = useDispatch()
   const { register, handleSubmit } = useForm()
   const navigate = useNavigate()
+
+  const invoices: IInvoice[] = useSelector((state: RootState) => state.invoices)
+
   const [items, setItems] = useState([{ name: '', qty: 1, price: '' }])
 
   const onSubmit = ({
@@ -26,7 +31,7 @@ function NewInvoice() {
     paymentTerms,
   }: IInvoice) => {
     const newInvoice = {
-      id: 'aa00001',
+      id: generateInvoiceNumber(invoices),
       name,
       date,
       status: 'Pending',
@@ -56,7 +61,7 @@ function NewInvoice() {
   }
 
   return (
-    <div className="px-6 py-8 md:px-12">
+    <div className="px-6 py-8 md:px-28 lg:px-96">
       <Link to="/invoices" className="flex gap-6 items-center font-bold">
         <span className="text-violet-400 ">&lt;</span>Go back
       </Link>
@@ -216,7 +221,7 @@ function NewInvoice() {
           <button
             type="button"
             onClick={handleAddItem}
-            className="bg-slate-100 text-slate-500 font-bold w-full py-4 rounded-3xl mt-12">
+            className="bg-slate-100 text-slate-500 font-bold w-full py-4 rounded-3xl mt-12 hover:bg-slate-200">
             + Add New Item
           </button>
         </div>

@@ -39,9 +39,9 @@ function InvoiceDetails() {
   }, 0)
 
   console.log(items)
-  // console.log(invoiceData);
+
   return (
-    <div className="px-6 pt-8 ">
+    <div className="px-6 pt-8 md:px-28 lg:px-96">
       <Link to="/invoices" className="flex gap-6 items-center font-bold">
         <span className="text-violet-400 ">&lt;</span>Go back
       </Link>
@@ -106,7 +106,7 @@ function InvoiceDetails() {
             <div
               key={item.name}
               className="flex items-center p-6 font-bold justify-between ">
-              <div>
+              <div className="md:flex basis-2/4 justify-between">
                 <p className="text-black ">{item.name}</p>
                 <p className="text-violet-400">
                   {item.qty} x {currency} {item.price}
@@ -126,7 +126,7 @@ function InvoiceDetails() {
           </p>
         </div>
       </div>
-      <div className="flex justify-between bg-white p-6">
+      <div className="flex justify-between md:justify-center md:gap-4 bg-white px-2 py-3">
         <Button role="edit" text="Edit" link={`/invoices/edit/${id}`} />
         <Button
           role="delete"

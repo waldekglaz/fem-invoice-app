@@ -45,29 +45,6 @@ const saveState = (state: IInvoice[]): void => {
   }
 }
 
-// const initialState: IInvoice[] = [
-//   {
-//     id: 'AA0001',
-//     name: 'Johnny B',
-//     date: '11/12/2023',
-//     status: 'Pending',
-//     description: 'Website and batroom tiles',
-//     email: 'johynnyB@gmail.com',
-//     city: 'Tewkesbury',
-//     street: 'St Johns',
-//     postcode: 'GL53 5AF',
-//     country: 'United Kingdom',
-//     paymentTerms: 14,
-//     currency: '$',
-//     items: [
-//       { name: 'website development', qty: 2, price: 999 },
-//       { name: 'email design', qty: 1, price: 299 },
-//     ],
-//   },
-// ]
-
-// const initialState = loadState()
-
 const invoicesSlice = createSlice({
   name: 'invoices',
   initialState: loadState(),

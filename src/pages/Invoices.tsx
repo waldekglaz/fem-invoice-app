@@ -10,7 +10,7 @@ function Invoices() {
   const invoices: IInvoice[] = useSelector((state: RootState) => state.invoices)
 
   return (
-    <div className="px-6 py-8 ">
+    <div className="px-6 py-8 md:px-28 lg:px-96">
       <div className="flex justify-between items-center mb-8">
         <div>
           <div className="font-bold">Invoices</div>

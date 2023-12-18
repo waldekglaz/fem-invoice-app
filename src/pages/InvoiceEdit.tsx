@@ -7,6 +7,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import { IInvoice } from '../redux/slices/invoicesSlice'
 import TrashIcon from '../assets/trash.png'
 import { RootState } from '../redux/store'
+import InputField from '../components/InputField'
+import Button from '../components/Button'
 
 function InvoiceEdit() {
   const { id } = useParams()
@@ -46,90 +48,66 @@ function InvoiceEdit() {
   }
 
   return (
-    <div className="px-6 py-8 ">
+    <div className="px-6 py-8 md:px-28 lg:px-96">
       <Link to="/invoices" className="flex gap-6 items-center font-bold">
         <span className="text-violet-400 ">&lt;</span>Go back
       </Link>
       <h1 className="font-bold mt-6 mb-5 text-lg">Edit #{id}</h1>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="text-violet-600 mb-6 ">Bill to</div>
-        <p className="flex flex-col mb-4 ">
-          <label className="text-slate-600 text-sm mb-2" htmlFor="name">
-            Client's Name
-          </label>
+        <InputField label="Client's Name" name="name">
           <input
             type="text"
             {...register('name')}
             className=" px-4 py-2 border border-slate-300"
           />
-        </p>
-        <p className="flex flex-col mb-4">
-          <label htmlFor="email" className="text-slate-600 text-sm mb-2">
-            Client's Email
-          </label>
+        </InputField>
+        <InputField label="Client's Email" name="email">
           <input
             type="email"
             {...register('email')}
             className=" px-4 py-2 border border-slate-300"
           />
-        </p>
-        <p className="flex flex-col mb-4">
-          <label htmlFor="street" className="text-slate-600 text-sm mb-2">
-            Street Address
-          </label>
+        </InputField>
+        <InputField label="Street Address" name="street">
           <input
             type="email"
             {...register('street')}
             className=" px-4 py-2 border border-slate-300"
           />
-        </p>
+        </InputField>
+
         <div className="flex justify-between gap-4 mb-4">
-          <p className="basis-2/4">
-            <label htmlFor="city" className="text-slate-600  text-sm mb-2">
-              City
-            </label>
+          <InputField pClassName="basis-2/4" name="city" label=" City">
             <input
               type="text"
               {...register('city')}
               className=" px-4 py-2 border border-slate-300 w-full"
             />
-          </p>
-          <p className="basis-2/4">
-            <label htmlFor="postcode" className="text-slate-600 text-sm mb-2">
-              Post Code
-            </label>
+          </InputField>
+          <InputField pClassName="basis-2/4" name="postcode" label="Post Code">
             <input
               type="text"
               {...register('postcode')}
               className=" px-4 py-2 border border-slate-300 w-full"
             />
-          </p>
+          </InputField>
         </div>
-
-        <p className="flex flex-col mb-4">
-          <label htmlFor="country" className="border-slate-300 text-sm mb-2">
-            Country
-          </label>
+        <InputField name="country" label="Country">
           <input
             type="text"
             {...register('country')}
             className="px-4 py-2 border border-slate-300 w-full"
           />
-        </p>
-        <p className="flex flex-col mb-4">
-          <label htmlFor="date" className="text-slate-600 text-sm mb-2">
-            Invoice Date
-          </label>
+        </InputField>
+        <InputField label="Invoice Date" name="date">
           <input
             type="date"
             {...register('date')}
             className="px-4 py-2 border border-slate-300 w-full"
           />
-        </p>
-        <p className="flex flex-col mb-4">
-          <label htmlFor="paymentTerms" className="text-slate-600 text-sm mb-2">
-            Payment Terms
-          </label>
+        </InputField>
+        <InputField name="paymentTerms" label="Payment Terms">
           <select
             {...register('paymentTerms')}
             className="text-slate-600 text-sm mb-2 px-4 py-2 border border-slate-300">
@@ -138,17 +116,14 @@ function InvoiceEdit() {
             <option value="14">Net 14 Days</option>
             <option value="30">Net 30 Days</option>
           </select>
-        </p>
-        <p className="flex flex-col mb-4">
-          <label htmlFor="description" className="text-slate-600 text-sm mb-2">
-            Project Description
-          </label>
-          <input
-            type="text"
+        </InputField>
+        <InputField name="description" label="Project Description">
+          <textarea
             {...register('description')}
             className="px-4 py-2 border border-slate-300 w-full"
           />
-        </p>
+        </InputField>
+
         <div>
           <h2 className="text-2xl font-bold mb-4">Items List</h2>
           {items.map((item, index) => (
@@ -156,13 +131,10 @@ function InvoiceEdit() {
               key={`${index}-item`}
               id={`item-${index}`}
               className="list-item list-none md:flex md:justify-start md:items-center">
-              <p className="flex flex-col mb-4 md:mr-4">
-                {' '}
-                <label
-                  htmlFor={`item-name-${index}`}
-                  className="text-slate-600 text-sm mb-2 ">
-                  Item Name
-                </label>
+              <InputField
+                name={`item-name-${index}`}
+                label="Item Name"
+                pClassName="md:mr-4">
                 <input
                   type="text"
                   value={item.name}
@@ -173,15 +145,13 @@ function InvoiceEdit() {
                   }}
                   className="px-4 py-2 border border-slate-300 w-full"
                 />
-              </p>
+              </InputField>
 
               <div className="flex items-center justify-between ">
-                <p className="flex flex-col mb-4 mr-4">
-                  <label
-                    htmlFor={`item-qty-${index}`}
-                    className="text-slate-600 text-sm mb-2 ">
-                    Qty.
-                  </label>
+                <InputField
+                  name={`item-qty-${index}`}
+                  label="Qty."
+                  pClassName="mr-4">
                   <input
                     type="number"
                     value={item.qty}
@@ -192,14 +162,11 @@ function InvoiceEdit() {
                     }}
                     className="px-4 py-2 border border-slate-300 w-14"
                   />
-                </p>
-                <p className="flex flex-col mb-4 md:mr-4">
-                  {' '}
-                  <label
-                    className="text-slate-600 text-sm mb-2 "
-                    htmlFor={`item-price-${index}`}>
-                    Price
-                  </label>
+                </InputField>
+                <InputField
+                  name={`item-price-${index}`}
+                  label="Price"
+                  pClassName="md:mr-4">
                   <input
                     type="number"
                     value={item.price}
@@ -210,7 +177,8 @@ function InvoiceEdit() {
                     }}
                     className="px-4 py-2 border border-slate-300 w-[100px] mr-2 md:w-[220px]"
                   />
-                </p>
+                </InputField>
+
                 <p className="flex flex-col mb-4 md:mr-10">
                   {' '}
                   <label
@@ -244,21 +212,29 @@ function InvoiceEdit() {
             + Add New Item
           </button>
         </div>
-
-        <p className="flex flex-col mb-4">
-          <label htmlFor="invoiceDate" className="text-slate-600 text-sm mb-2">
-            Currency
-          </label>
+        <InputField name="currency" label="Currency">
           <input
             type="string"
             {...register('currency')}
             className="px-4 py-2 border border-slate-300 w-full"
           />
-        </p>
+        </InputField>
+        <InputField name="status" label="Status">
+          <select
+            {...register('status')}
+            className="px-4 py-2 border border-slate-300 w-full">
+            <option value="Paid">Paid</option>
+            <option value="Pending">Pending</option>
+          </select>
+        </InputField>
       </form>
-      <div className="flex justify-between">
-        <button onClick={() => navigate('/invoices')}>Cancel</button>
-        <button onClick={handleSubmit(onSubmit)}>Save Changes</button>
+      <div className="flex justify-between mt-6">
+        <Button text="Cancel" role="edit" link="/invoices" />
+        <Button
+          text="Save Changes"
+          role="other"
+          onClick={handleSubmit(onSubmit)}
+        />
       </div>
     </div>
   )
