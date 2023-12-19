@@ -225,7 +225,7 @@ function InvoiceEdit() {
         </InputField>
       </form>
       <div className="flex justify-between mt-6">
-        <Button text="Cancel" role="edit" link="/invoices" />
+        <Button text="Cancel" role="delete" onClick={() => navigate(-1)} />
         <Button
           text="Save Changes"
           role="other"
