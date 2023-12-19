@@ -1,26 +1,27 @@
-import { Link, useNavigate } from 'react-router-dom'
-import { addInvoice } from '../redux/slices/invoicesSlice'
-import { useDispatch, useSelector } from 'react-redux'
-import { useForm } from 'react-hook-form'
-import { useState } from 'react'
-import { IInvoice } from '../redux/slices/invoicesSlice'
-import TrashIcon from '../assets/trash.png'
-import { InputField } from '../components'
+import { Link, useNavigate } from "react-router-dom";
+import { addInvoice } from "../redux/slices/invoicesSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { useForm } from "react-hook-form";
+import { useState } from "react";
+import { IInvoice } from "../redux/slices/invoicesSlice";
+import TrashIcon from "../assets/trash.png";
+import { InputField } from "../components";
 import {
   generateInvoiceNumber,
   calculateDueDate,
   todaysDate,
-} from '../utils/utils'
-import { RootState } from '../redux/store'
+} from "../utils/utils";
+import { RootState } from "../redux/store";
+import { toast } from "react-toastify";
 
 function NewInvoice() {
-  const dispatch = useDispatch()
-  const { register, handleSubmit } = useForm<IInvoice>()
-  const navigate = useNavigate()
+  const dispatch = useDispatch();
+  const { register, handleSubmit } = useForm<IInvoice>();
+  const navigate = useNavigate();
 
-  const invoices = useSelector((state: RootState) => state.invoices)
+  const invoices = useSelector((state: RootState) => state.invoices);
 
-  const [items, setItems] = useState([{ name: '', qty: '1', price: '' }])
+  const [items, setItems] = useState([{ name: "", qty: "1", price: "" }]);
 
   const onSubmit = ({
     name,
@@ -39,7 +40,7 @@ function NewInvoice() {
       name,
       date,
       dueDate: calculateDueDate(date, paymentTerms),
-      status: 'Pending',
+      status: "Pending",
       street,
       email,
       country,
@@ -49,22 +50,23 @@ function NewInvoice() {
       description,
       paymentTerms,
       items: items,
-    }
-    console.log(newInvoice.date)
-    dispatch(addInvoice(newInvoice))
-    navigate('/invoices')
-  }
+    };
+    console.log(newInvoice.date);
+    dispatch(addInvoice(newInvoice));
+    navigate("/invoices");
+    toast.success("Invoice Created!");
+  };
 
   const handleAddItem = () => {
-    setItems([...items, { name: '', qty: '1', price: '' }])
+    setItems([...items, { name: "", qty: "1", price: "" }]);
     // console.log(items)
-  }
+  };
 
   const handleDeleteItem = (index: number) => {
-    const updatedItems = [...items]
-    updatedItems.splice(index, 1)
-    setItems(updatedItems)
-  }
+    const updatedItems = [...items];
+    updatedItems.splice(index, 1);
+    setItems(updatedItems);
+  };
 
   return (
     <div className="px-6 py-8 md:px-28 lg:px-96">
@@ -77,21 +79,21 @@ function NewInvoice() {
         <InputField label="Client's Name" name="name">
           <input
             type="text"
-            {...register('name')}
+            {...register("name")}
             className=" px-4 py-2 border border-slate-300"
           />
         </InputField>
         <InputField label="Client's Email" name="email">
           <input
             type="email"
-            {...register('email')}
+            {...register("email")}
             className=" px-4 py-2 border border-slate-300"
           />
         </InputField>
         <InputField label="Street Address" name="street">
           <input
             type="email"
-            {...register('street')}
+            {...register("street")}
             className=" px-4 py-2 border border-slate-300"
           />
         </InputField>
@@ -100,14 +102,14 @@ function NewInvoice() {
           <InputField pClassName="basis-2/4" name="city" label=" City">
             <input
               type="text"
-              {...register('city')}
+              {...register("city")}
               className=" px-4 py-2 border border-slate-300 w-full"
             />
           </InputField>
           <InputField pClassName="basis-2/4" name="postcode" label="Post Code">
             <input
               type="text"
-              {...register('postcode')}
+              {...register("postcode")}
               className=" px-4 py-2 border border-slate-300 w-full"
             />
           </InputField>
@@ -115,22 +117,23 @@ function NewInvoice() {
         <InputField name="country" label="Country">
           <input
             type="text"
-            {...register('country')}
+            {...register("country")}
             className="px-4 py-2 border border-slate-300 w-full"
           />
         </InputField>
         <InputField label="Invoice Date" name="date">
           <input
             type="date"
-            {...register('date')}
+            {...register("date")}
             defaultValue={todaysDate(new Date())}
             className="px-4 py-2 border border-slate-300 w-full"
           />
         </InputField>
         <InputField name="paymentTerms" label="Payment Terms">
           <select
-            {...register('paymentTerms')}
-            className="text-slate-600 text-sm mb-2 px-4 py-2 border border-slate-300">
+            {...register("paymentTerms")}
+            className="text-slate-600 text-sm mb-2 px-4 py-2 border border-slate-300"
+          >
             <option value="1">Net 1 Day</option>
             <option value="7">Net 7 Days</option>
             <option value="14">Net 14 Days</option>
@@ -139,7 +142,7 @@ function NewInvoice() {
         </InputField>
         <InputField name="description" label="Project Description">
           <textarea
-            {...register('description')}
+            {...register("description")}
             className="px-4 py-2 border border-slate-300 w-full"
           />
         </InputField>
@@ -150,18 +153,20 @@ function NewInvoice() {
             <div
               key={`${index}-item`}
               id={`item-${index}`}
-              className="list-item list-none md:flex md:justify-start md:items-center">
+              className="list-item list-none md:flex md:justify-start md:items-center"
+            >
               <InputField
                 name={`item-name-${index}`}
                 label="Item Name"
-                pClassName="md:mr-4">
+                pClassName="md:mr-4"
+              >
                 <input
                   type="text"
                   value={item.name}
                   onChange={(e) => {
-                    const newItems = [...items]
-                    newItems[index] = { ...item, name: e.target.value }
-                    setItems(newItems)
+                    const newItems = [...items];
+                    newItems[index] = { ...item, name: e.target.value };
+                    setItems(newItems);
                   }}
                   className="px-4 py-2 border border-slate-300 w-full"
                 />
@@ -171,14 +176,15 @@ function NewInvoice() {
                 <InputField
                   name={`item-qty-${index}`}
                   label="Qty."
-                  pClassName="mr-4">
+                  pClassName="mr-4"
+                >
                   <input
                     type="number"
                     value={item.qty}
                     onChange={(e) => {
-                      const newItems = [...items]
-                      newItems[index] = { ...item, qty: e.target.value }
-                      setItems(newItems)
+                      const newItems = [...items];
+                      newItems[index] = { ...item, qty: e.target.value };
+                      setItems(newItems);
                     }}
                     className="px-4 py-2 border border-slate-300 w-14"
                   />
@@ -186,24 +192,26 @@ function NewInvoice() {
                 <InputField
                   name={`item-price-${index}`}
                   label="Price"
-                  pClassName="md:mr-4">
+                  pClassName="md:mr-4"
+                >
                   <input
                     type="number"
                     value={item.price}
                     onChange={(e) => {
-                      const newItems = [...items]
-                      newItems[index] = { ...item, price: e.target.value }
-                      setItems(newItems)
+                      const newItems = [...items];
+                      newItems[index] = { ...item, price: e.target.value };
+                      setItems(newItems);
                     }}
                     className="px-4 py-2 border border-slate-300 w-[100px] mr-2 md:w-[220px]"
                   />
                 </InputField>
 
                 <p className="flex flex-col mb-4 md:mr-10">
-                  {' '}
+                  {" "}
                   <label
                     className="text-slate-600 text-sm mb-2 "
-                    htmlFor="total">
+                    htmlFor="total"
+                  >
                     Total
                   </label>
                   <input
@@ -228,21 +236,22 @@ function NewInvoice() {
           <button
             type="button"
             onClick={handleAddItem}
-            className="bg-slate-100 text-slate-500 font-bold w-full py-4 rounded-3xl mt-12 hover:bg-slate-200">
+            className="bg-slate-100 text-slate-500 font-bold w-full py-4 rounded-3xl mt-12 hover:bg-slate-200"
+          >
             + Add New Item
           </button>
         </div>
         <InputField name="currency" label="Currency">
           <input
             type="string"
-            {...register('currency')}
+            {...register("currency")}
             className="px-4 py-2 border border-slate-300 w-full"
           />
         </InputField>
       </form>
       <button onClick={handleSubmit(onSubmit)}>Add Invoice</button>
     </div>
-  )
+  );
 }
 
-export default NewInvoice
+export default NewInvoice;
