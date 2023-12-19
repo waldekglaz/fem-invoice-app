@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import { Link, useNavigate } from 'react-router-dom'
@@ -17,7 +17,7 @@ function InvoiceEdit() {
   const [items, setItems] = useState(editedInvoice!.items)
 
   const handleAddItem = () => {
-    setItems([...items, { name: '', qty: 1, price: 0 }])
+    setItems([...items, { name: '', qty: '1', price: '' }])
   }
 
   const handleDeleteItem = (index: number) => {
@@ -27,23 +27,19 @@ function InvoiceEdit() {
   }
 
   const dispatch = useDispatch()
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm({
-    defaultValues: editedInvoice,
+  const { register, handleSubmit } = useForm<IInvoice>({
+    defaultValues: editedInvoice as IInvoice,
   })
   const navigate = useNavigate()
 
-  const onSubmit = (data: IInvoice[]) => {
+  const onSubmit = (data: IInvoice) => {
     const updatedInvoice: IInvoice = {
       ...data,
-      id,
+      id: id!,
       items: [...items],
     }
 
-    dispatch(editInvoice({ id, updatedInvoice }))
+    dispatch(editInvoice({ id: id!, updatedInvoice }))
     navigate('/invoices')
   }
 
@@ -157,7 +153,7 @@ function InvoiceEdit() {
                     value={item.qty}
                     onChange={(e) => {
                       const newItems = [...items]
-                      newItems[index] = { ...item, qty: +e.target.value }
+                      newItems[index] = { ...item, qty: e.target.value }
                       setItems(newItems)
                     }}
                     className="px-4 py-2 border border-slate-300 w-14"
@@ -172,7 +168,7 @@ function InvoiceEdit() {
                     value={item.price}
                     onChange={(e) => {
                       const newItems = [...items]
-                      newItems[index] = { ...item, price: +e.target.value }
+                      newItems[index] = { ...item, price: e.target.value }
                       setItems(newItems)
                     }}
                     className="px-4 py-2 border border-slate-300 w-[100px] mr-2 md:w-[220px]"
@@ -190,7 +186,7 @@ function InvoiceEdit() {
                     className="px-4 py-2 border border-slate-300 w-18"
                     type="text"
                     disabled
-                    value={item.qty * item.price}
+                    value={+item.qty * +item.price}
                   />
                 </p>
                 <button type="button" onClick={() => handleDeleteItem(index)}>

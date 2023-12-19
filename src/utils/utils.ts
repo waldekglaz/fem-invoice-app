@@ -1,9 +1,11 @@
-export function generateInvoiceNumber(existingInvoices) {
+import { IInvoice } from '../redux/slices/invoicesSlice'
+
+export function generateInvoiceNumber(existingInvoices: IInvoice[]) {
   let currentId = 1
 
   // Find the maximum existing invoice ID
   if (existingInvoices && existingInvoices.length > 0) {
-    const maxId = existingInvoices.reduce((max, invoice) => {
+    const maxId = existingInvoices.reduce((max: number, invoice: IInvoice) => {
       const idNumber = parseInt(invoice.id.slice(2), 10)
       return idNumber > max ? idNumber : max
     }, 0)

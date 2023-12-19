@@ -1,14 +1,19 @@
 import { useSelector, useDispatch } from 'react-redux'
 import { useParams, Link, useNavigate } from 'react-router-dom'
 import { deleteInvoice, markAsPaid } from '../redux/slices/invoicesSlice'
-import { IInvoice } from '../redux/slices/invoicesSlice'
+import { IInvoice, TListItems } from '../redux/slices/invoicesSlice'
 import Button from '../components/Button'
+import { RootState } from '../redux/store'
 
 function InvoiceDetails() {
-  const invoices = useSelector((state) => state.invoices)
-  const { id } = useParams()
   const dispatch = useDispatch()
   const navigate = useNavigate()
+
+  const invoices: IInvoice[] = useSelector((state: RootState) => state.invoices)
+  const { id } = useParams()
+  if (!id) {
+    return <div>Invoice ID is missing</div>
+  }
 
   const handleInvoiceDelete = (id: string) => {
     dispatch(deleteInvoice(id))
@@ -20,6 +25,9 @@ function InvoiceDetails() {
   }
 
   const invoiceData = invoices.find((invoice: IInvoice) => invoice.id === id)
+  if (!invoiceData) {
+    return <div>Invoice not found</div>
+  }
   const {
     status,
     description,
@@ -34,8 +42,8 @@ function InvoiceDetails() {
     items,
   } = invoiceData
 
-  const grandTotal = items.reduce((sum, item) => {
-    return sum + item.qty * item.price
+  const grandTotal = items.reduce((sum: number, item: TListItems) => {
+    return sum + +item.qty * +item.price
   }, 0)
 
   console.log(items)
@@ -102,7 +110,7 @@ function InvoiceDetails() {
           <p className="font-bold text-lg text-black">{email}</p>
         </div>
         <div className="bg-slate-100 rounded-t-lg">
-          {items.map((item) => (
+          {items.map((item: TListItems) => (
             <div
               key={item.name}
               className="flex items-center p-6 font-bold justify-between ">
@@ -114,7 +122,7 @@ function InvoiceDetails() {
               </div>
 
               <p>
-                {currency} {item.qty * item.price}
+                {currency} {+item.qty * +item.price}
               </p>
             </div>
           ))}

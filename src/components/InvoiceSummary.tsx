@@ -18,7 +18,7 @@ function InvoiceSummary({
   items,
 }: InvoiceSummaryProps) {
   const grandTotal = items.reduce((sum: number, item) => {
-    return sum + item.qty * item.price
+    return sum + +item.qty * +item.price
   }, 0)
   return (
     <div className="bg-white rounded-lg p-6 mb-4 md:flex md:items-center md:justify-evenly">

@@ -11,12 +11,12 @@ import { RootState } from '../redux/store'
 
 function NewInvoice() {
   const dispatch = useDispatch()
-  const { register, handleSubmit } = useForm()
+  const { register, handleSubmit } = useForm<IInvoice>()
   const navigate = useNavigate()
 
   const invoices: IInvoice[] = useSelector((state: RootState) => state.invoices)
 
-  const [items, setItems] = useState([{ name: '', qty: 1, price: '' }])
+  const [items, setItems] = useState([{ name: '', qty: '1', price: '' }])
 
   const onSubmit = ({
     name,
@@ -30,7 +30,7 @@ function NewInvoice() {
     description,
     paymentTerms,
   }: IInvoice) => {
-    const newInvoice = {
+    const newInvoice: IInvoice = {
       id: generateInvoiceNumber(invoices),
       name,
       date,
@@ -50,7 +50,7 @@ function NewInvoice() {
   }
 
   const handleAddItem = () => {
-    setItems([...items, { name: '', qty: 1, price: '' }])
+    setItems([...items, { name: '', qty: '1', price: '' }])
     console.log(items)
   }
 
@@ -170,7 +170,7 @@ function NewInvoice() {
                     value={item.qty}
                     onChange={(e) => {
                       const newItems = [...items]
-                      newItems[index] = { ...item, qty: +e.target.value }
+                      newItems[index] = { ...item, qty: e.target.value }
                       setItems(newItems)
                     }}
                     className="px-4 py-2 border border-slate-300 w-14"
@@ -185,7 +185,7 @@ function NewInvoice() {
                     value={item.price}
                     onChange={(e) => {
                       const newItems = [...items]
-                      newItems[index] = { ...item, price: +e.target.value }
+                      newItems[index] = { ...item, price: e.target.value }
                       setItems(newItems)
                     }}
                     className="px-4 py-2 border border-slate-300 w-[100px] mr-2 md:w-[220px]"
@@ -203,7 +203,7 @@ function NewInvoice() {
                     className="px-4 py-2 border border-slate-300 w-18"
                     type="text"
                     disabled
-                    value={item.qty * item.price}
+                    value={+item.qty * +item.price}
                   />
                 </p>
                 <button type="button" onClick={() => handleDeleteItem(index)}>

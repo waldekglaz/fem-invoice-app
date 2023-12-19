@@ -1,14 +1,15 @@
-import React from 'react'
 import { Link } from 'react-router-dom'
 
 type TLink = {
   text: string
   role: 'edit' | 'other'
   link: string
+  onClick?: never
 }
 type TButton = {
   text: string
   role: 'delete' | 'asPaid' | 'other'
+  link?: never
   onClick: () => void
 }
 
