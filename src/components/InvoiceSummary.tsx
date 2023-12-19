@@ -6,16 +6,18 @@ export type InvoiceSummaryProps = {
   date: string
   status: 'Paid' | 'Pending'
   currency: string
+  dueDate: string
   items: TListItems[]
 }
 
 function InvoiceSummary({
   id,
   name,
-  date,
+
   status,
   currency,
   items,
+  dueDate,
 }: InvoiceSummaryProps) {
   const grandTotal = items.reduce((sum: number, item) => {
     return sum + +item.qty * +item.price
@@ -31,7 +33,7 @@ function InvoiceSummary({
       </div>
       <div className="mt-6 flex justify-between items-center md:mt-0 ">
         <div className="md:flex md:items-center">
-          <div className="text-sm text-violet-400 md:mr-20">Due {date}</div>
+          <div className="text-sm text-violet-400 md:mr-20">Due {dueDate}</div>
           <div className="font-bold text-sky-950 mt-2 md:mt-0 md:mr-10">
             {currency} {grandTotal}
           </div>

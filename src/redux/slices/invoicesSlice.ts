@@ -10,6 +10,7 @@ export interface IInvoice {
   id: string
   name: string
   date: string
+  dueDate: string
   status: 'Paid' | 'Pending'
   description: string
   email: string

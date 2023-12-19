@@ -6,7 +6,11 @@ import { useState } from 'react'
 import { IInvoice } from '../redux/slices/invoicesSlice'
 import TrashIcon from '../assets/trash.png'
 import InputField from '../components/InputField'
-import { generateInvoiceNumber } from '../utils/utils'
+import {
+  generateInvoiceNumber,
+  calculateDueDate,
+  formattedDate,
+} from '../utils/utils'
 import { RootState } from '../redux/store'
 
 function NewInvoice() {
@@ -33,7 +37,8 @@ function NewInvoice() {
     const newInvoice: IInvoice = {
       id: generateInvoiceNumber(invoices),
       name,
-      date,
+      date: formattedDate(date),
+      dueDate: calculateDueDate(date, paymentTerms),
       status: 'Pending',
       street,
       email,
@@ -45,6 +50,7 @@ function NewInvoice() {
       paymentTerms,
       items: items,
     }
+    console.log(newInvoice.dueDate)
     dispatch(addInvoice(newInvoice))
     navigate('/invoices')
   }

@@ -4,6 +4,7 @@ import { deleteInvoice, markAsPaid } from '../redux/slices/invoicesSlice'
 import { IInvoice, TListItems } from '../redux/slices/invoicesSlice'
 import Button from '../components/Button'
 import { RootState } from '../redux/store'
+import { formattedDate } from '../utils/utils'
 
 function InvoiceDetails() {
   const dispatch = useDispatch()
@@ -40,6 +41,7 @@ function InvoiceDetails() {
     email,
     currency,
     items,
+    dueDate,
   } = invoiceData
 
   const grandTotal = items.reduce((sum: number, item: TListItems) => {
@@ -83,11 +85,11 @@ function InvoiceDetails() {
           <div>
             <div className="mb-8">
               <p className="text-violet-400 mb-4">Invoice Date</p>
-              <p className="font-bold text-lg">{date}</p>
+              <p className="font-bold text-lg">{formattedDate(date)}</p>
             </div>
             <div>
               <p className="text-violet-400 mb-4">Payment Date</p>
-              <p className="font-bold text-lg">{date}</p>
+              <p className="font-bold text-lg">{dueDate}</p>
             </div>
           </div>
           <div>
