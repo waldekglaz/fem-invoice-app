@@ -1,33 +1,38 @@
-import { useSelector, useDispatch } from 'react-redux'
-import { useParams, Link, useNavigate } from 'react-router-dom'
-import { deleteInvoice, markAsPaid } from '../redux/slices/invoicesSlice'
-import { IInvoice, TListItems } from '../redux/slices/invoicesSlice'
-import { Button } from '../components'
-import { RootState } from '../redux/store'
-import { formattedDate } from '../utils/utils'
+import { useSelector, useDispatch } from "react-redux";
+import { useParams, Link, useNavigate } from "react-router-dom";
+import { deleteInvoice, markAsPaid } from "../redux/slices/invoicesSlice";
+import { IInvoice, TListItems } from "../redux/slices/invoicesSlice";
+import { Button } from "../components";
+import { RootState } from "../redux/store";
+import { formattedDate } from "../utils/utils";
+import { toast } from "react-toastify";
 
 function InvoiceDetails() {
-  const dispatch = useDispatch()
-  const navigate = useNavigate()
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-  const invoices: IInvoice[] = useSelector((state: RootState) => state.invoices)
-  const { id } = useParams()
+  const invoices: IInvoice[] = useSelector(
+    (state: RootState) => state.invoices
+  );
+  const { id } = useParams();
   if (!id) {
-    return <div>Invoice ID is missing</div>
+    return <div>Invoice ID is missing</div>;
   }
 
   const handleInvoiceDelete = (id: string) => {
-    dispatch(deleteInvoice(id))
-    navigate('/invoices')
-  }
+    dispatch(deleteInvoice(id));
+    navigate("/invoices");
+    toast.warning("Invoice Deleted!");
+  };
   const handleMarkAsPaid = (id: string) => {
-    dispatch(markAsPaid(id))
-    navigate('/invoices')
-  }
+    dispatch(markAsPaid(id));
+    // navigate(-1);
+    toast.success("Marked as Paid!");
+  };
 
-  const invoiceData = invoices.find((invoice: IInvoice) => invoice.id === id)
+  const invoiceData = invoices.find((invoice: IInvoice) => invoice.id === id);
   if (!invoiceData) {
-    return <div>Invoice not found</div>
+    return <div>Invoice not found</div>;
   }
   const {
     status,
@@ -42,11 +47,11 @@ function InvoiceDetails() {
     currency,
     items,
     dueDate,
-  } = invoiceData
+  } = invoiceData;
 
   const grandTotal = items.reduce((sum: number, item: TListItems) => {
-    return sum + +item.qty * +item.price
-  }, 0)
+    return sum + +item.qty * +item.price;
+  }, 0);
 
   return (
     <div className="px-6 pt-8 md:px-28 lg:px-96">
@@ -57,10 +62,11 @@ function InvoiceDetails() {
         <div className="text-sm text-violet-400">Status</div>
         <div
           className={`font-bold px-7 py-3 rounded-md ${
-            status === 'Paid'
-              ? 'text-green-500 bg-green-100'
-              : 'text-orange-500 bg-orange-100'
-          }`}>
+            status === "Paid"
+              ? "text-green-500 bg-green-100"
+              : "text-orange-500 bg-orange-100"
+          }`}
+        >
           {status}
         </div>
       </div>
@@ -113,7 +119,8 @@ function InvoiceDetails() {
           {items.map((item: TListItems) => (
             <div
               key={item.name}
-              className="flex items-center p-6 font-bold justify-between ">
+              className="flex items-center p-6 font-bold justify-between "
+            >
               <div className="md:flex basis-2/4 justify-between">
                 <p className="text-black ">{item.name}</p>
                 <p className="text-violet-400">
@@ -142,7 +149,7 @@ function InvoiceDetails() {
           text="Delete"
         />
 
-        {status !== 'Paid' && (
+        {status !== "Paid" && (
           <Button
             role="asPaid"
             text="Mark as Paid"
@@ -151,7 +158,7 @@ function InvoiceDetails() {
         )}
       </div>
     </div>
-  )
+  );
 }
 
-export default InvoiceDetails
+export default InvoiceDetails;
