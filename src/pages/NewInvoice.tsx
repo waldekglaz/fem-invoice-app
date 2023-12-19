@@ -6,7 +6,11 @@ import { useState } from 'react'
 import { IInvoice } from '../redux/slices/invoicesSlice'
 import TrashIcon from '../assets/trash.png'
 import { InputField } from '../components'
-import { generateInvoiceNumber, calculateDueDate } from '../utils/utils'
+import {
+  generateInvoiceNumber,
+  calculateDueDate,
+  todaysDate,
+} from '../utils/utils'
 import { RootState } from '../redux/store'
 
 function NewInvoice() {
@@ -46,14 +50,14 @@ function NewInvoice() {
       paymentTerms,
       items: items,
     }
-    console.log(newInvoice.dueDate)
+    console.log(newInvoice.date)
     dispatch(addInvoice(newInvoice))
     navigate('/invoices')
   }
 
   const handleAddItem = () => {
     setItems([...items, { name: '', qty: '1', price: '' }])
-    console.log(items)
+    // console.log(items)
   }
 
   const handleDeleteItem = (index: number) => {
@@ -119,6 +123,7 @@ function NewInvoice() {
           <input
             type="date"
             {...register('date')}
+            defaultValue={todaysDate(new Date())}
             className="px-4 py-2 border border-slate-300 w-full"
           />
         </InputField>

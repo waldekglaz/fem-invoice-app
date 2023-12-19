@@ -48,8 +48,6 @@ function InvoiceDetails() {
     return sum + +item.qty * +item.price
   }, 0)
 
-  console.log(items)
-
   return (
     <div className="px-6 pt-8 md:px-28 lg:px-96">
       <Link to="/invoices" className="flex gap-6 items-center font-bold">
