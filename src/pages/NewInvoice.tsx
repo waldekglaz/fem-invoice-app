@@ -18,7 +18,7 @@ function NewInvoice() {
   const { register, handleSubmit } = useForm<IInvoice>()
   const navigate = useNavigate()
 
-  const invoices: IInvoice[] = useSelector((state: RootState) => state.invoices)
+  const invoices = useSelector((state: RootState) => state.invoices)
 
   const [items, setItems] = useState([{ name: '', qty: '1', price: '' }])
 
