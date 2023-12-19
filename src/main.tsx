@@ -2,8 +2,14 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import './index.css'
-import { Root, Home, Invoices, InvoiceDetails, InvoiceEdit } from './pages'
-import { NewInvoice } from './components'
+import {
+  Root,
+  Home,
+  Invoices,
+  InvoiceDetails,
+  InvoiceEdit,
+  NewInvoice,
+} from './pages'
 import { Provider } from 'react-redux'
 import store from './redux/store'
 const router = createBrowserRouter([

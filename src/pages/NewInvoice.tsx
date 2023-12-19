@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form'
 import { useState } from 'react'
 import { IInvoice } from '../redux/slices/invoicesSlice'
 import TrashIcon from '../assets/trash.png'
-import InputField from '../components/InputField'
+import { InputField } from '../components'
 import { generateInvoiceNumber, calculateDueDate } from '../utils/utils'
 import { RootState } from '../redux/store'
 

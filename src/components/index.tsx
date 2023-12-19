@@ -1,6 +1,8 @@
 import InvoiceSummary from './InvoiceSummary'
 import Header from './Header'
 import NoInvoices from './NoInvoices'
-import NewInvoice from '../pages/NewInvoice'
+import InputField from './InputField'
 
-export { Header, InvoiceSummary, NoInvoices, NewInvoice }
+import Button from './Button'
+
+export { Header, InvoiceSummary, NoInvoices, Button, InputField }

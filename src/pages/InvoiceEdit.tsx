@@ -7,8 +7,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { IInvoice } from '../redux/slices/invoicesSlice'
 import TrashIcon from '../assets/trash.png'
 import { RootState } from '../redux/store'
-import InputField from '../components/InputField'
-import Button from '../components/Button'
+import { InputField, Button } from '../components'
 import { calculateDueDate } from '../utils/utils'
 
 function InvoiceEdit() {

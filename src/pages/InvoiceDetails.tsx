@@ -2,7 +2,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { useParams, Link, useNavigate } from 'react-router-dom'
 import { deleteInvoice, markAsPaid } from '../redux/slices/invoicesSlice'
 import { IInvoice, TListItems } from '../redux/slices/invoicesSlice'
-import Button from '../components/Button'
+import { Button } from '../components'
 import { RootState } from '../redux/store'
 import { formattedDate } from '../utils/utils'
 
