@@ -1,5 +1,5 @@
 import { InvoiceSummary } from '../components'
-import { NoInvoices } from '../components'
+import { NoInvoices, InvoicesTracker } from '../components'
 import { Link } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { IInvoice } from '../redux/slices/invoicesSlice'
@@ -24,12 +24,7 @@ function Invoices() {
     <div className="px-6 py-8 md:px-28 lg:px-96">
       <div className="flex justify-between items-center mb-8 flex-wrap gap-4">
         <div>
-          <div className="font-bold">Invoices</div>
-          <div className="text-sm text-violet-400">
-            {invoicesToShow.length === 0
-              ? 'No Invoices'
-              : `${invoicesToShow.length} invoices`}
-          </div>
+          <InvoicesTracker invoices={invoicesToShow} />
         </div>
         <input
           type="text"
