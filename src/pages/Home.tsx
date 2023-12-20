@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import HeroImg from '../assets/finance.png'
+import { Button } from '../components'
 
 function Home() {
   return (
@@ -16,11 +17,12 @@ function Home() {
           This invoicing app project will test you on many levels. You'll be
           working with JSON data, managing state, plus a lot more.{' '}
         </p>
-        <Link
+        {/* <Link
           className="bg-slate-600 text-slate-50 px-4 py-2 rounded-md"
           to="/invoices">
           Get Started
-        </Link>
+        </Link> */}
+        <Button role="edit" text="Get Started" link="/invoices" />
       </div>
     </div>
   )
