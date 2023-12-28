@@ -9,6 +9,7 @@ import {
   InvoiceDetails,
   InvoiceEdit,
   NewInvoice,
+  ErrorPage,
 } from './pages'
 import { Provider } from 'react-redux'
 import store from './redux/store'
@@ -16,6 +17,7 @@ const router = createBrowserRouter([
   {
     path: '/',
     element: <Root />,
+    errorElement: <ErrorPage />,
     children: [
       { path: '/', element: <Home /> },
       {

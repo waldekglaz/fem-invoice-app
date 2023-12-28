@@ -23,9 +23,8 @@ function Invoices() {
   return (
     <div className="px-6 py-8 md:px-28 lg:px-96">
       <div className="flex justify-between items-center mb-8 flex-wrap gap-4">
-        <div>
-          <InvoicesTracker invoices={invoicesToShow} />
-        </div>
+        <InvoicesTracker invoices={invoicesToShow} />
+
         <input
           type="text"
           placeholder="Search by name"
