@@ -24,6 +24,10 @@ Users should be able to:
 - See hover and focus states for all interactive elements on the page
 - Local storage used for saving and retrieving invoices
 
+### Screenshot
+
+![](./Screenshot-invoices.png)
+
 ### Links
 
 - Solution URL: [GitHub](https://github.com/waldekglaz/fem-invoice-app)
