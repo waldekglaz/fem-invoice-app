@@ -4,7 +4,6 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import './index.css'
 import {
   Root,
-  Home,
   Invoices,
   InvoiceDetails,
   InvoiceEdit,
@@ -19,7 +18,6 @@ const router = createBrowserRouter([
     element: <Root />,
     errorElement: <ErrorPage />,
     children: [
-      // { path: '/', element: <Home /> },
       {
         path: '/',
         element: <Invoices />,
