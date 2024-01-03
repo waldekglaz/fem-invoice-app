@@ -23,7 +23,7 @@ function InvoiceDetails() {
 
   const handleInvoiceDelete = (id: string) => {
     dispatch(deleteInvoice(id))
-    navigate('/invoices')
+    navigate('/')
     toast.warning('Invoice Deleted!')
   }
   const handleMarkAsPaid = (id: string) => {
@@ -69,7 +69,7 @@ function InvoiceDetails() {
   return (
     <>
       <div className="px-6 pt-8 md:px-28 lg:px-96">
-        <Link to="/invoices" className="flex gap-6 items-center font-bold">
+        <Link to="/" className="flex gap-6 items-center font-bold">
           <span className="text-violet-400 ">&lt;</span>Go back
         </Link>
         <div className="flex items-center justify-between p-6 bg-white mt-8">
@@ -154,7 +154,7 @@ function InvoiceDetails() {
           </div>
         </div>
         <div className="flex justify-between md:justify-center md:gap-4 bg-white px-2 py-3">
-          <Button role="edit" text="Edit" link={`/invoices/edit/${id}`} />
+          <Button role="edit" text="Edit" link={`/edit/${id}`} />
           <Button
             role="delete"
             onClick={() => setIsModalOpen(true)}

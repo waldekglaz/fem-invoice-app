@@ -19,14 +19,14 @@ const router = createBrowserRouter([
     element: <Root />,
     errorElement: <ErrorPage />,
     children: [
-      { path: '/', element: <Home /> },
+      // { path: '/', element: <Home /> },
       {
-        path: '/invoices',
+        path: '/',
         element: <Invoices />,
       },
-      { path: '/invoices/:id', element: <InvoiceDetails /> },
-      { path: '/invoices/new', element: <NewInvoice /> },
-      { path: '/invoices/edit/:id', element: <InvoiceEdit /> },
+      { path: '/:id', element: <InvoiceDetails /> },
+      { path: '/new', element: <NewInvoice /> },
+      { path: '/edit/:id', element: <InvoiceEdit /> },
     ],
   },
 ])
