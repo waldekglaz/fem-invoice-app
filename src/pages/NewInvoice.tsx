@@ -57,7 +57,7 @@ function NewInvoice() {
     }
 
     dispatch(addInvoice(newInvoice))
-    navigate('/invoices')
+    navigate('/')
     toast.success('Invoice Created!')
   }
 
@@ -73,7 +73,7 @@ function NewInvoice() {
 
   return (
     <div className="px-6 py-8 md:px-28 lg:px-96">
-      <Link to="/invoices" className="flex gap-6 items-center font-bold">
+      <Link to="/" className="flex gap-6 items-center font-bold">
         <span className="text-violet-400 ">&lt;</span>Go back
       </Link>
       <h1 className="font-bold mt-6 mb-5 text-lg">New Invoice</h1>

@@ -34,7 +34,7 @@ function Invoices() {
         />
         <Link
           className="flex items-center bg-violet-400 text-white font-bold p-2 pr-4 rounded-3xl hover:bg-violet-600"
-          to="/invoices/new">
+          to="/new">
           <span className="bg-white p-3 rounded-full mr-2">
             <img src={AddIcon} alt="" />
           </span>
@@ -44,7 +44,7 @@ function Invoices() {
       {invoicesToShow.length > 0 ? (
         <div>
           {invoicesToShow.map((invoice) => (
-            <Link to={`/invoices/${invoice.id}`} key={invoice.id}>
+            <Link to={`/${invoice.id}`} key={invoice.id}>
               <InvoiceSummary {...invoice} />
             </Link>
           ))}
